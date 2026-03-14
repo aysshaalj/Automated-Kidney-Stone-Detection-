@@ -1,146 +1,214 @@
-## Kidney Stone Detection using CNN + Harris Hawks Optimization (HHO)
+# Kidney Stone Detection using CNN + Harris Hawks Optimization (HHO)
 
-This project implements a deep learning system for automatic kidney stone detection from axial CT images. It compares a standard Convolutional Neural Network (CNN) with a hybrid CNN optimized using the Harris Hawks Optimization (HHO) algorithm.
+This project implements a deep learning system for automatic kidney stone detection from axial CT images. It compares a baseline Convolutional Neural Network (CNN) with a hybrid CNN optimized using the Harris Hawks Optimization (HHO) algorithm.
 
+The goal is to evaluate whether metaheuristic optimization can improve CNN performance by automatically tuning hyperparameters and architecture choices.
 
-Requirements
+---
 
-Python 3.8+
-Recommended: GPU or Apple Silicon (MPS)
+## Project Overview
 
-Installation
+Kidney stones are commonly diagnosed using CT imaging. Manual analysis can be time-consuming and subject to human error. This project explores how machine learning can assist medical imaging diagnostics by automatically classifying CT images into:
 
-1. **Create a virtual environment**
-```
-python -m venv venv
-venv\Scripts\activate
-```
+- Stone
+- Non-Stone
 
-2. **Install dependencies**
+Two models are implemented and compared.
 
-**Option 1: Install individual packages**
-```
-pip install torch torchvision numpy pandas matplotlib seaborn scikit-learn
-```
+Baseline CNN
+- Standard CNN architecture
+- Manually defined hyperparameters
 
-**Option 2: Using requirements.txt (recommended)**
-To get the exact versions as specified, use:
-```
-pip install -r requirements.txt
-```
+CNN + HHO
+- Same CNN architecture
+- Hyperparameters optimized using Harris Hawks Optimization
 
+---
 
-Dataset Setup
+## Project Structure
 
-**Dataset Source:**
-Download the **Axial CT Imaging Dataset for AI-Powered Kidney Stone Detection** from:
+project/
+│
+├── baseline_fixed.py
+├── fixed_hho.py
+├── model_analysis.py
+│
+├── best_fixed_model.pt
+├── hho_cnn_presentation_best.pt
+│
+├── training_results.csv
+├── comparison_avg_metrics_summary.csv
+├── comparison_per_class_metrics.csv
+│
+├── requirements.txt
+│
+└── Dataset/
+    ├── Stone/
+    └── Non-Stone/
+
+---
+
+## Dataset
+
+Dataset: Axial CT Imaging Dataset for AI-Powered Kidney Stone Detection
+
+Source:
 https://www.kaggle.com/datasets/shuvokumarbasakbd/kidney-stone-axial-ct-imaging-colorized-dataset
 
-**Expected Structure:**
-After downloading, your dataset should have the following structure:
-```
+The dataset contains CT images labeled as:
+
+- Stone
+- Non-Stone
+
+Expected dataset structure:
+
 Dataset/
-├── Non-Stone/
+├── Stone/
 │   ├── image_001.jpg
-│   ├── image_002.jpg
 │   └── ...
-└── Stone/
+│
+└── Non-Stone/
     ├── image_001.jpg
-    ├── image_002.jpg
     └── ...
-```
 
-**Integration Steps:**
+---
 
-1. **Place the dataset** in your project directory or any location on your system
+## Installation
 
-2. **Update the dataset path** in the following files:
+Create a virtual environment:
 
-   **For baseline_fixed.py** (Line 30):
-   ```python
-   data_dir: str = r"./path/to/your/dataset"
-   ```
+python -m venv venv
 
-   **For fixed_hho.py** (Line 34):
-   ```python
-   data_dir: str = r"./path/to/your/dataset"
-   ```
+Activate environment
 
-   **For fixed_hho.py** (when running with custom paths):
-   ```
-   python fixed_hho.py --data_dir "path/to/your/dataset"
-   ```
-   **For baseline_fixed.py** (Line 636):
-   ```python
-   data_dir: str = r"./path/to/your/dataset"
-   ```
-   **For baseline_fixed.py** (Line 636):
-   ```python
-   data_dir: str = r"./path/to/your/dataset"
-   ```
+Windows:
+venv\Scripts\activate
 
-3. **Verify structure**: Ensure the dataset has two folders named exactly:
-   - `Stone/` (contains kidney stone images)
-   - `Non-Stone/` (contains non-stone images)
+Mac/Linux:
+source venv/bin/activate
 
+Install dependencies:
 
-How to Run
+pip install -r requirements.txt
 
-1) Train Baseline CNN
-```
-python baseline_cnn.py
-```
+Or manually:
 
-• Trains for 15 epochs  
-• Saves best_model.pt 
-• Saves history.csv  
+pip install torch torchvision numpy pandas matplotlib seaborn scikit-learn
 
-2) Train Hybrid CNN + HHO
-```
-python cnn_hho.py
-```
+---
 
-Quick test:
-```
-python cnn_hho.py --quick
-```
+## Dataset Setup
+
+After downloading the dataset:
+
+1. Place the dataset folder inside the project directory or anywhere on your system.
+
+2. Update the dataset path in the training scripts.
+
+Example:
+
+data_dir = "./path/to/Dataset"
+
+Make sure the folder contains:
+
+Stone/
+Non-Stone/
+
+---
+
+## How to Run
+
+Train Baseline CNN
+
+python baseline_fixed.py
+
+This will:
+- Train the CNN model
+- Run for 15 epochs
+- Save the best model
+
+Outputs:
+
+runs_baseline/
+    best_model.pt
+    history.csv
+
+---
+
+Train CNN + HHO Model
+
+python fixed_hho.py
+
+Quick test run:
+
+python fixed_hho.py --quick
 
 Skip optimization:
-```
-python cnn_hho.py --skip_hho
-```
 
-• Saves hho_cnn_presentation_best.pt  
-• Saves training_results.csv
+python fixed_hho.py --skip_hho
 
-3) Generate Plots
-Before running check if the directory for the dataset and the csv files are correct
+Outputs:
 
+hho_cnn_presentation_best.pt
+training_results.csv
 
+---
 
-# Evaluation Metrics
+Generate Model Comparison Plots
 
-- Accuracy  
-- Precision  
-- Recall  
-- F1‑Score  
-- Confusion Matrix  
-- Training / Validation Curves  
-- Comparison charts between both models for the metrics
+python model_analysis.py
 
+This script generates:
 
-# What HHO Optimizes
+- Confusion matrices
+- Accuracy / Precision / Recall / F1 curves
+- Model comparison charts
+- Per-class performance metrics
 
-- Learning rate  
-- Weight decay  
-- Dropout  
-- Data augmentation strength  
-- Batch size  
-- Channel scaling  
-- Optional network depth  
+Outputs are saved in:
 
+comparison_outputs/
 
-##Notes
+---
 
-Hybrid training may take several hours or days depending on hardware.
-Use --quick for fast testing.
+## Evaluation Metrics
+
+The models are evaluated using:
+
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- Confusion Matrix
+- Training vs Validation Curves
+- Per-class performance comparison
+
+---
+
+## Harris Hawks Optimization (HHO)
+
+HHO is a swarm-based metaheuristic optimization algorithm inspired by the cooperative hunting behavior of Harris hawks.
+
+In this project HHO automatically optimizes:
+
+- Learning rate
+- Weight decay
+- Dropout rate
+- Batch size
+- Data augmentation strength
+- CNN channel scaling
+- Optional network depth
+
+This allows the model to search for better hyperparameters than manual tuning.
+
+---
+
+## Hardware
+
+Recommended:
+
+- GPU (CUDA)
+or
+- Apple Silicon (MPS)
+
+CPU training is possible but slower.
