@@ -23,30 +23,6 @@ CNN + HHO
 - Same CNN architecture
 - Hyperparameters optimized using Harris Hawks Optimization
 
----
-
-## Project Structure
-
-project/
-│
-├── baseline_fixed.py
-├── fixed_hho.py
-├── model_analysis.py
-│
-├── best_fixed_model.pt
-├── hho_cnn_presentation_best.pt
-│
-├── training_results.csv
-├── comparison_avg_metrics_summary.csv
-├── comparison_per_class_metrics.csv
-│
-├── requirements.txt
-│
-└── Dataset/
-    ├── Stone/
-    └── Non-Stone/
-
----
 
 ## Dataset
 
