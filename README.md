@@ -118,7 +118,7 @@ Before running check if the directory for the dataset and the csv files are corr
 
 
 
-##Evaluation Metrics
+# Evaluation Metrics
 
 - Accuracy  
 - Precision  
@@ -129,7 +129,7 @@ Before running check if the directory for the dataset and the csv files are corr
 - Comparison charts between both models for the metrics
 
 
-##What HHO Optimizes
+# What HHO Optimizes
 
 - Learning rate  
 - Weight decay  
