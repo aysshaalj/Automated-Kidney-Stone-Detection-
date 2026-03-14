@@ -1,4 +1,4 @@
-##Kidney Stone Detection using CNN + Harris Hawks Optimization (HHO)
+## Kidney Stone Detection using CNN + Harris Hawks Optimization (HHO)
 
 This project implements a deep learning system for automatic kidney stone detection from axial CT images. It compares a standard Convolutional Neural Network (CNN) with a hybrid CNN optimized using the Harris Hawks Optimization (HHO) algorithm.
 
